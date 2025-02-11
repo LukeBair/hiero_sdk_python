@@ -46,15 +46,17 @@ def createAccount(key: str = None, initialBalance: str = None, receiverSignature
     transaction = (
         AccountCreateTransaction()
         .set_key(public_key)
+        # .set_initial_balance(int(initialBalance))
+        .set_receiver_signature_required(receiverSignatureRequired)
+        # .set_auto_renew_period(0, int(autoRenewPeriod))
         .set_account_memo(memo)
         .freeze_with(utils.__client)
     )
-    # WARNING: I believe that this is right, but im not sure what the case is if the key parameter is a Private Key
-    #  why the heck are they giving me a private key anyways...
+
     transaction.sign(utils.__operatorPrivateKey)
     receipt = transaction.execute(utils.__client)
 
     return Success({
-        "accountId": receipt.accountId,
-        "status": receipt.status,
+        "accountId": str(receipt.accountId),
+        "status": str(receipt.status),
     })

@@ -104,6 +104,7 @@ class PublicKey:
             format=serialization.PublicFormat.Raw
         )
 
+
     def to_string_raw(self) -> str:
         """
         Returns the raw public key as a hex-encoded string.
